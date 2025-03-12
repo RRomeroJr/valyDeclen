@@ -89,7 +89,7 @@ def log_schema(conn, table_name):
     print(table_name + ": " + "\n" + " \n".join([str(tup) for tup in get_schema(conn, table_name)]))
     
 def get_schema(conn: sqlite3.Connection, table_name: str):
-    cursor = conn.execute(f"PRAGMA table_info({table_name})")
+    cursor.execute(f"PRAGMA table_info({table_name})")
     schema = cursor.fetchall()
     return schema
 def enter_in_db(entry: dict[str]):
