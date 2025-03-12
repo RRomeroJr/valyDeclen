@@ -52,8 +52,9 @@ def g_declen_gender_f_p(p: Tag) -> str:
 
 
 
-def g_urls_from_dict_page(html_doc) -> list[str]:
-
+def g_urls_from_dict_page(html_doc, must_have: set[str], not_have_set: set[str] = None) -> list[str]:
+    if not not_have_set:
+        not_have_set = {}
     soup = bs4.BeautifulSoup(html_doc, 'html.parser')
 
     # Find the <div> with class "mw-parser-output"
@@ -73,14 +74,19 @@ def g_urls_from_dict_page(html_doc) -> list[str]:
                 dl_text = next_sibling.get_text()
                 dl_text_1st = dl_text.split(" ")[0]
                 # Check if the <dl> meets the criteria
-                if 'n.' == dl_text_1st and '6col.' not in dl_text and '6pau.' not in dl_text:
+                skip = False
+                for e in not_have_set:
+                    if e in dl_text:
+                        skip = True
+                        break
+                if skip: continue
+
+                if  dl_text_1st in must_have:
                     # result.append((child, next_sibling))
                     word = child.find("a").text
-                    url = "{}".format(  child.find("a").get("href"))
+                    url = "{}".format(child.find("a").get("href"))
                     result.append((word, url))
                     continue
         # rejected.append(child.text)
     # print(rejected)
     return result
-    
-
