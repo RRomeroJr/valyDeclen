@@ -1,0 +1,5 @@
+In adjs noticed that a col_span can be longer
+then actual number of columns.. 🙃
+
+the rows headers on the adjs page are not
+actually <th>s but on the verbs page they are

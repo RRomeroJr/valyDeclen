@@ -1,0 +1,9 @@
+Valy DB should be initalized before use
+You can do this by calling init() then grabing conn, cursor
+
+Or you can call g_conn_cursor() which will init the db if
+it isn't alrearly initialized
+
+When searching by name some forms have multiple versions
+zōbritro/zōbritrot. Advised to use LIKE % to find stuff
+by text vals
