@@ -3,6 +3,7 @@ from colorama import Fore, Back, Style
 from rrjr.rrjr_printing import pr_separate
 import sqlite3
 from typing import Any, Sequence
+from enum import Enum, auto
 
 
 case_map = {"Nominative": "nom", "Accusative": "acc", "Genitive": "gen", "Dative": "dat", "Locative": "loc",
@@ -14,6 +15,28 @@ initialized = False
 field_names = [f"{cs}_{qs}" for qs in quant_map.values() for cs in case_map.values()]
 conn: sqlite3.Connection = None
 cursor: sqlite3.Cursor = None
+class Commit_Modes(Enum):
+    ENABLED = auto()
+    ROLLBACK = auto()
+    IGNORE = auto()
+__commit_mode = Commit_Modes.ROLLBACK
+def s_commit_mode(inp: str|Commit_Modes):
+    global __commit_mode
+    if isinstance(inp, str):
+        found = False
+        for cm in Commit_Modes:
+            if inp == cm.name:
+                __commit_mode = cm
+                found = True
+        if not found:
+            raise Exception(f"{inp} is not a value commit mode.")
+    elif isinstance(inp, Commit_Modes):
+        __commit_mode = inp
+    else:
+        raise Exception(f'Invalid type sent to valy_db.s_commit_mode {type(inp)}')
+    print(f'Valy db set to {__commit_mode}') 
+        
+
 def g_conn_cursor():
     global conn, cursor, initialized
     if not initialized:
