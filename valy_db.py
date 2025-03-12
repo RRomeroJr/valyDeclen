@@ -17,18 +17,33 @@ case_map = {"Nominative": "nom", "Accusative": "acc", "Genitive": "gen", "Dative
 quant_map = {"Singular": "sing", "Plural": "pl", "Paucal": "pau", "Collective": "col"}
 declen_map = {"first":"1st", "second":"2nd", "third":"3rd", "fourth":"4th", "fifth":"5th", "sixth":"6th"}
 gender_map = {"lunar":"lun", "solar":"sol", "terrestrial":"ter", "aquatic":"aq"}
+initialized = False
 field_names = [f"{cs}_{qs}" for qs in quant_map.values() for cs in case_map.values()]
 conn: sqlite3.Connection = None
 cursor: sqlite3.Cursor = None
 def g_conn_cursor():
-    conn = sqlite3.connect("valy.sqlite3")
-    cursor = conn.cursor()
-    return (conn, cursor)
-def s_conn_cursor(_conn: sqlite3.Connection, _cursor: sqlite3.Cursor):
+    global conn, cursor, initialized
+    if not initialized:
+        init()
+    return conn, cursor
+def s_conn(_conn: sqlite3.Connection):
     global conn
     global cursor
     conn = _conn
-    cursor = _cursor
+    cursor = conn.cursor()
+def init(reinit = False):
+    global conn, cursor, initialized
+    if initialized and not reinit:
+        if conn or cursor:
+            print("Warning re-initing valy_db. Things pointing to valy_db's conn/ cursor will now be different from valy_db's conn/ cursor.")
+        return
+    conn= sqlite3.connect("valy.sqlite3")
+    cursor = conn.cursor()
+    """Apparently SQLite doesn't enforce foreign keys
+    vv by default. Which is very cool :). vv"""
+    cursor.execute("PRAGMA foreign_keys = ON;")
+    initialized = True
+    print("Valy DB init'd")
 def create_words_forms_table():
     data_type = "VARCHAR(30)"
     create_params = [field_names[0] + f" {data_type}" + " PRIMARY KEY"]
