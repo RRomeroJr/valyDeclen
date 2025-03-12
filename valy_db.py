@@ -126,3 +126,53 @@ def enter_in_db(entry: dict[str]):
 
 # with sp_open("mwpo", "w", encoding="UTF-8") as f:
 #     f.write(mwpo.prettify())
+
+def add_adj_to_db(word: str, adj_class: int, forms = set[tuple[str, str, str, str, str, str]]) -> int:
+    """Returns back adj_id"""
+    #tuple looks like (word_form, d_type, position, gender, quantity, case)
+    cursor.execute("BEGIN TRANSACTION;")
+    cursor.execute("INSERT INTO adjs(base, class) VALUES(?,?)", (word, adj_class))
+    adj_id = cursor.lastrowid
+    for f in forms:
+        assert len(cursor.execute("Select * From adjs Where id = ?", (adj_id,)).fetchall()) == 1, f
+        assert len(cursor.execute("Select * From adj_d_types Where name = ?", (f[1],)).fetchall()) == 1, f
+        assert len(cursor.execute("Select * From adj_positions Where name = ?", (f[2],)).fetchall()) == 1, f
+        assert len(cursor.execute("Select * From genders Where name = ?", (f[3],)).fetchall()) == 1, f
+        assert len(cursor.execute("Select * From quants Where name = ?", (f[4],)).fetchall()) == 1, f
+        assert len(cursor.execute("Select * From cases Where name = ?", (f[5],)).fetchall()) == 1, f
+    cursor.executemany(f"""INSERT INTO adj_forms
+    (form, adj_id, d_type, pos, gender, quant, g_case) VALUES(?, {adj_id}, ?, ?, ?, ?, ?)""", forms)
+    print("add adj to db end")
+    return adj_id
+def add_noun_to_db(word: str, declen: str, gender: str, forms = set[tuple[str, str, str]]) -> int:
+    """Returns back noun_id"""
+    #tuple looks like (word_form, quantity, case)
+    cursor.execute("BEGIN TRANSACTION;")
+    cursor.execute("INSERT INTO nouns(base, declen, gender) VALUES(?, ?, ?)", (word, declen, gender))
+    noun_id = cursor.lastrowid
+    for f in forms:
+        assert len(cursor.execute("Select * From nouns Where id = ?", (noun_id,)).fetchall()) == 1, f
+        assert len(cursor.execute("Select * From quants Where name = ?", (f[1],)).fetchall()) == 1, f
+        assert len(cursor.execute("Select * From cases Where name = ?", (f[2],)).fetchall()) == 1, f
+
+    cursor.executemany(f"""INSERT INTO noun_forms
+    (noun_id, form, quant, g_case) VALUES({noun_id}, ?, ?, ?)""", forms)
+    print("add noun to db end")
+    return noun_id
+def g_sql(table_name):
+    r = cursor.execute(f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table_name}';").fetchone()
+    return r[0] if r else None
+
+def commit():
+    # print('__commit_mode', __commit_mode)
+    if(__commit_mode == Commit_Modes.ENABLED):
+        print("Commiting database")
+        conn.commit()
+    elif(__commit_mode == Commit_Modes.IGNORE):
+        print(f"Commit mode {__commit_mode.name}. Ignoring call to commit")
+    else:
+        print(f'valy_db.commit() called but __commit_mode not ENABLED. Rolling back..\n __commit_mode == {__commit_mode.name}')
+        conn.rollback()
+def rollback():
+    conn.rollback()
+
