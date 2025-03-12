@@ -13,8 +13,8 @@ def g_seq_filename(filename: str):
     test_name = output_name
     while os.path.exists(test_name):
         num += 1
-        split = os.path.splitext(os.path.basename(output_name))
-        test_name = ''.join(split[0] + str(num) + split[1])
+        name, ext = os.path.splitext(output_name)
+        test_name = ''.join(name + str(num) + ext)
         
     output_name = test_name
     return output_name
