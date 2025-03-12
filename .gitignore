@@ -5,3 +5,5 @@ __pycache__
 *backup
 *test_page
 .~lock*
+db_test*
+scrap*
