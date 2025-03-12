@@ -2,3 +2,6 @@ process_fail*
 failed_forms*
 other_ideas
 __pycache__
+*backup
+*test_page
+.~lock*
