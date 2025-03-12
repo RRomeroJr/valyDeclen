@@ -1,16 +1,9 @@
-import bs4
-from rrjr.rrjr_fm import sp_open
-from bsParseTable import *
-from typing import Iterator
-import pprint
-from bs4 import PageElement
-from bs4 import Tag
 import colorama
 from colorama import Fore, Back, Style
-from rrjr.rrjr_bs4_printing import *
 from rrjr.rrjr_printing import pr_separate
 import sqlite3
-from typing import Any
+from typing import Any, Sequence
+
 
 case_map = {"Nominative": "nom", "Accusative": "acc", "Genitive": "gen", "Dative": "dat", "Locative": "loc",
 "Instrumental": "ins", "Comitative": "com", "Vocative":"voc" }
