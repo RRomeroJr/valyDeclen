@@ -1,11 +1,7 @@
 import bs4
-from bsParseTable import *
-from typing import Iterator
-import pprint
-from bs4 import PageElement
+from table_parse import *
 from bs4 import Tag
-import colorama
-from colorama import Fore, Back, Style
+from colorama import Fore, Back, Style  
 from rrjr.rrjr_bs4_printing import *
 from rrjr.rrjr_printing import *
 
@@ -24,19 +20,25 @@ def g_entry_grps(hv_h2: Tag, word_type_opts: dict[str]) -> list[list[Tag]]:
         if not hv_h2_i:
             print(f"{i}: (BEFORE HV) {g_tag_head(tag)} ▶")
             continue 
+        tid = None
+        try:
+            tid = tag.find("span").get("id")
+        except:
+            pass
         if not curr_entry:
-            tid = None
-            try:
-                tid = tag.find("span").get("id")
-            except:
-                pass
-            if tid and tid in word_type_opts:
-                print(f"{Fore.GREEN}{i}: {g_tag_head(tag)} {tid} ✅{Style.RESET_ALL}")
-
+            if tid and tid in word_type_opts: # starts the grp
+                print(f"{Fore.GREEN}{i}: {g_tag_head(tag)} {tid} ✅👈{Style.RESET_ALL}")
                 entry_grps.append([tag])
                 curr_entry = entry_grps[-1]
             else:
                 print(f"{i}: {g_tag_head(tag)}")
+        elif tid and tid in word_type_opts: # end curr and start new grp
+                print(f"{Fore.GREEN}{i}: {g_tag_head(tag)} {tid} 🛑✅👈{Style.RESET_ALL}")
+                entry_grps.append([tag])
+                curr_entry = entry_grps[-1]
+        elif (tag.text == "Derived Terms" or tag.text == "Related Terms"):
+            print(f"{i}: {g_tag_head(tag)} {tid} 🛑")
+            curr_entry = None
         else:
             print(f"{Fore.GREEN} {i}: {g_tag_head(tag)} ✅➕{Style.RESET_ALL}")
             entry_grps[-1].append(tag)
