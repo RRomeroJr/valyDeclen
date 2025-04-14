@@ -68,9 +68,9 @@ while (test_max < 1 or count <= test_max): # Game Loop
     start = time.time()
     resp = input(f"What is the {form_to_test} of {random_entry[0]}?\n")
     stop = time.time()
-    elspd_time = round(stop - start, 2)
-    if elspd_time > time_max: # don't log time if too long
-         elspd_time = -1
+    elpsd_time = round(stop - start, 2)
+    if elpsd_time > time_max: # don't log time if too long
+         elpsd_time = -1
     if not (resp != "/quit" and resp != "/q"):
         break
     if resp == random_entry[1]:
@@ -80,7 +80,7 @@ while (test_max < 1 or count <= test_max): # Game Loop
         # Log incorrects
         with open(failed_file_name, "a", newline='', encoding="UTF-8") as f:
             wr = csv.writer(f, delimiter='\t')
-            wr.writerow(random_entry + (form_to_test, resp, elspd_time) )
+            wr.writerow(random_entry + (form_to_test, resp, elpsd_time) )
     
     print(f" ans: {random_entry[1]}")
     input("Any to conintue" + (f" ({count}/{test_max}).." if test_max > 0 else ".."))

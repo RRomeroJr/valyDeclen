@@ -129,9 +129,9 @@ while (test_max < 1 or count <= test_max): # Game Loop
     start = time.time()
     resp = input(f"What is the {case_quant} of {random_entry[0]}?\n")
     stop = time.time()
-    elspd_time = round(stop - start, 2)
-    if elspd_time > time_max: # don't log time if too long
-         elspd_time = None
+    elpsd_time = round(stop - start, 2)
+    if elpsd_time > time_max: # don't log time if too long
+         elpsd_time = None
     if not (resp != "/quit" and resp != "/q"):
         break
     if resp.lower() == random_entry[1].lower():
@@ -144,7 +144,7 @@ while (test_max < 1 or count <= test_max): # Game Loop
         print("FAILURE")
         # Log incorrects
     print(f" ans: {random_entry[1]}")
-    valy_stats.add_response(random_entry[-1], resp, random_entry[-2], passed, elspd_time)
+    valy_stats.add_response(random_entry[-1], resp, random_entry[-2], passed, elpsd_time)
     input("Any to conintue" + (f" ({count}/{test_max}).." if test_max > 0 else ".."))
     count += 1
 if(save_changes):

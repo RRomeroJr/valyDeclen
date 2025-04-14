@@ -193,10 +193,10 @@ while (test_max < 1 or count <= test_max): # Game Loop
     start = time.time()
     resp = input(f"What is the {form_tup} of {base}?\n")
     stop = time.time()
-    elspd_time = round(stop - start, 2)
-    if elspd_time > time_max:
+    elpsd_time = round(stop - start, 2)
+    if elpsd_time > time_max:
          # don't log time if too long
-         elspd_time = None
+         elpsd_time = None
     if not (resp != "/quit" and resp != "/q"):
         break
     if any(resp.lower() == e.lower() for e in  random_entry[1].split('/')):
@@ -206,7 +206,7 @@ while (test_max < 1 or count <= test_max): # Game Loop
         passed = False
         print("FAILURE")
     print(f" ans: {answer}")
-    valy_stats.add_response(form_id, resp, word_type, passed, elspd_time)
+    valy_stats.add_response(form_id, resp, word_type, passed, elpsd_time)
     input("Any to conintue" + (f" ({count}/{test_max}).." if test_max > 0 else ".."))
     count += 1
 if(save_changes):
