@@ -1,3 +1,7 @@
+from settings import default_settings, local_settings
+db_path = local_settings.get("db_path", default_settings.get("db_path", None))
+if db_path == None:
+    raise ValueError("valy_db could not find the path to the database")
 import colorama
 from colorama import Fore, Back, Style
 from rrjr.rrjr_printing import pr_separate
