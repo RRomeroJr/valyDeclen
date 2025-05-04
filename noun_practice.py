@@ -3,7 +3,7 @@ from valy_db import g_conn_cursor
 import sys
 import os
 from typing import Iterable, Callable
-import rrjr.rrjr_fm as rrjr_fm
+import rrjr_py.rrjr_fm as rrjr_fm
 import csv
 import random
 import time

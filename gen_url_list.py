@@ -1,10 +1,10 @@
 import requests
-import rrjr.rrjr_fm as rrjr_fm
+import rrjr_py.rrjr_fm as rrjr_fm
 from typing import Iterator
 import colorama
 from colorama import Fore, Back, Style
-from rrjr.rrjr_bs4_printing import *
-from rrjr.rrjr_printing import *
+from rrjr_py.rrjr_bs4 import *
+from rrjr_py.rrjr_printing import *
 from valy_wiki_parse import *
 import csv
 colorama.init()

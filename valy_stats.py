@@ -1,4 +1,4 @@
-import rrjr.rrjr_fm as rrjr_fm
+import rrjr_py.rrjr_fm as rrjr_fm
 import csv
 import random
 import time

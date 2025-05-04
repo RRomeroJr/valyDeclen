@@ -1,8 +1,7 @@
 from table_parse import *
 from valy_wiki_parse import *
 from typing import Iterator
-from rrjr.rrjr_bs4_printing import *
-from rrjr.rrjr_printing import *
+from rrjr_py import *
 from name_maps import adj_class_map, case_map, quant_map, adj_pos_map, gender_map, declen_map
 import valy_db
 from colorama import Fore, Back, Style

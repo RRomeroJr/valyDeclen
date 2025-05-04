@@ -1,6 +1,6 @@
 import bs4
-from rrjr.rrjr_fm import sp_open
-from rrjr.rrjr_printing import pr_separate
+from rrjr_py.rrjr_fm import sp_open
+from rrjr_py.rrjr_printing import pr_separate
 import sys
 from bs4.element import Tag
 import pprint
