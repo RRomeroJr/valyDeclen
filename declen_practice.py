@@ -32,7 +32,7 @@ declen_to_test = "3rd"
 res = conn.execute(f"""SELECT word_forms.nom_sing, word_forms.{form_to_test}, word_info.declen FROM word_forms
 INNER JOIN word_info ON word_forms.nom_sing = word_info.word WHERE word_info.declen = '{declen_to_test}'""").fetchall()
 '''
-import rrjr_py.rrjr_fm as rrjr_fm
+import rrjr_fm
 import csv
 import random
 import time

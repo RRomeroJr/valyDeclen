@@ -1,8 +1,8 @@
 import requests
 from table_parse import *
 from typing import Iterator
-from rrjr_py.rrjr_bs4 import *
-from rrjr_py.rrjr_printing import *
+from rrjr_bs4 import *
+from rrjr_printing import *
 from valy_wiki_parse import *
 from name_maps import adj_class_map
 import valy_db

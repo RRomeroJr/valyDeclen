@@ -2,8 +2,8 @@ import bs4
 from table_parse import *
 from bs4 import Tag
 from colorama import Fore, Back, Style  
-from rrjr_py.rrjr_bs4 import *
-from rrjr_py.rrjr_printing import *
+from rrjr_bs4 import *
+from rrjr_printing import *
 
 
 #region Get Word Entry Grps

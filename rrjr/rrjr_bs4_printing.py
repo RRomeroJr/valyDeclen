@@ -1,5 +1,5 @@
 import bs4
-from rrjr_py.rrjr_fm import sp_open
+from rrjr_fm import sp_open
 from typing import Iterator
 import pprint
 from bs4 import PageElement

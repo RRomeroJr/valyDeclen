@@ -4,7 +4,7 @@ if db_path == None:
     raise ValueError("valy_db could not find the path to the database")
 import colorama
 from colorama import Fore, Back, Style
-from rrjr_py.rrjr_printing import pr_separate
+from rrjr_printing import pr_separate
 import sqlite3
 from typing import Any, Sequence
 from enum import Enum, auto
