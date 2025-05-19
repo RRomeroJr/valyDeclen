@@ -17,4 +17,7 @@ except FileNotFoundError:
 except json.JSONDecodeError:
     print("Error decoding JSON")
 
+def get(key, default=None):
+    return local_settings.get(key, default_settings.get(key, default))
+
 print(default_settings , "\n", local_settings)
