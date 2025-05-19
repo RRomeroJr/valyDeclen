@@ -89,10 +89,11 @@ while (test_max < 1 or count <= test_max): # Game Loop
     # form_tup = (random.choice(cases)[1], random.choice(quants)[1])
     _case = None
     quant = None
-    prompt_keys_to_opts_key = {'case':'cases', 'quant':'quants', 'declen':'declens'}
-    prompt_args = {'case':None, 'quant':None, 'declen':None}
+    prompt_keys_to_opts_key = {'g_case':'cases', 'quant':'quants', 'declen':'declens'}
+    prompt_args = {'g_case':None, 'quant':None, 'declen':None}
     for pa in prompt_args.keys():
-        r_list = valy_stats.find_worst(pa)
+        r_list = valy_stats.find_worst3('noun', pa)
+        print(pa, r_list)
         opts = options_map[prompt_keys_to_opts_key[pa]]
         skipped = False
         for _r in r_list:
@@ -106,12 +107,12 @@ while (test_max < 1 or count <= test_max): # Game Loop
                     skipped = True
         if skipped:
             print(f'opts: {opts}')
-        assert prompt_args[pa] != None, f"prompt arg {pa} could not find valid arg"
+        assert prompt_args[pa] != None, f"prompt arg \"{pa}\" could not find valid arg"
 
     form_tup = tuple(prompt_args.values())
     print('form_tup', form_tup)
     
-    case_quant = f"{prompt_args['case']}_{prompt_args['quant']}"
+    case_quant = f"{prompt_args['g_case']}_{prompt_args['quant']}"
     print("case_quant", case_quant, 'declen')
     if False:
         res: list[str] = cursor.execute(g_from_w_endings(case_quant, endings), endings).fetchall()
