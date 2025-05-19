@@ -1,4 +1,5 @@
-from settings import default_settings, local_settings
+from vd_settings import default_settings, local_settings
+import vd_settings
 db_path = local_settings.get("db_path", default_settings.get("db_path", None))
 if db_path == None:
     raise ValueError("valy_db could not find the path to the database")
@@ -57,7 +58,8 @@ def init(reinit = False):
         if conn or cursor:
             print("Warning re-initing valy_db. Things pointing to valy_db's conn/ cursor will now be different from valy_db's conn/ cursor.")
         return
-    conn= sqlite3.connect("valy.sqlite3")
+    # conn= sqlite3.connect("valy.sqlite3")
+    conn= sqlite3.connect(vd_settings.get("db_path"))
     cursor = conn.cursor()
     """Apparently SQLite doesn't enforce foreign keys
     vv by default. Which is very cool :). vv"""
