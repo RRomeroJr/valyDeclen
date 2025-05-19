@@ -74,6 +74,7 @@ def add_response(form_id: int, resp:str, word_type: str, passed: bool, resp_time
     cursor.execute(query, (form_id, resp, word_type, passed, resp_time))
     last = cursor.execute("Select * From responses where id = ?", (cursor.lastrowid,)).fetchone()
     form_check = cursor.execute("Select form From noun_forms where id = ?", (last[1],)).fetchone()
+    print("(ans) (response id, noun form id, word_type, resp, resp centiSecs, passed, insert_date)")
     print(f'({form_check[0] if form_check else form_check})', last)
 def find_worst_case():
     query = """ --Noun version
